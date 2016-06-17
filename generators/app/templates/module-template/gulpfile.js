@@ -33,6 +33,7 @@
 
   gulp.task('scripts', function () {
     return gulp.src('src/scripts/*')
+      .pipe(gulp.dest('dist/scripts'))
       .pipe($.uglify())
       .pipe($.rename({
         suffix: '.min'

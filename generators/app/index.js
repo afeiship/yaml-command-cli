@@ -66,9 +66,10 @@ module.exports = yeoman.Base.extend({
     );
   },
   _writingSass: function () {
-    this.fs.copy(
+    this.fs.copyTpl(
       this.templatePath('module-template/src/sass/template.scss'),
-      this.destinationPath(this._TMPLATE_DIR + '/src/sass/' + this._TMPLATE_DIR + '.scss')
+      this.destinationPath(this._TMPLATE_DIR + '/src/sass/' + this._TMPLATE_DIR + '.scss'),
+      this.props
     );
   },
   _writingScrips: function () {
