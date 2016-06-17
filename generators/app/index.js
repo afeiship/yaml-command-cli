@@ -40,48 +40,48 @@ module.exports = yeoman.Base.extend({
   },
   _writingGulpfile: function () {
     this.fs.copyTpl(
-      this.templatePath('gulpfile.js'),
-      this.destinationPath('gulpfile.js'),
+      this.templatePath('module-template/gulpfile.js'),
+      this.destinationPath('module-template/gulpfile.js'),
       this.props
     );
   },
   _writingIndexHtml: function () {
     this.fs.copyTpl(
-      this.templatePath('index.html'),
-      this.destinationPath('index.html'),
+      this.templatePath('module-template/index.html'),
+      this.destinationPath('module-template/index.html'),
       this.props
     );
   },
   _writingPackageJson: function () {
     this.fs.copyTpl(
-      this.templatePath('package.json'),
-      this.destinationPath('package.json'),
+      this.templatePath('module-template/package.json'),
+      this.destinationPath('module-template/package.json'),
       this.props
     );
   },
   _writingReadme: function () {
     this.fs.copyTpl(
-      this.templatePath('README.MD'),
-      this.destinationPath('README.MD'),
+      this.templatePath('module-template/README.MD'),
+      this.destinationPath('module-template/README.MD'),
       this.props
     );
   },
   _writingImages: function () {
     this.fs.copy(
-      this.templatePath('src/images/*'),
-      this.destinationPath('src/images/')
+      this.templatePath('module-template/src/images/*'),
+      this.destinationPath('module-template/src/images/')
     );
   },
   _writingSass: function () {
     this.fs.copy(
-      this.templatePath('src/sass/template.scss'),
-      this.destinationPath('src/sass/' + this.props.module_name + '.scss')
+      this.templatePath('module-template/src/sass/template.scss'),
+      this.destinationPath('module-template/src/sass/' + this.props.module_name + '.scss')
     );
   },
   _writingScrips: function () {
     this.fs.copyTpl(
-      this.templatePath('src/scripts/template.js'),
-      this.destinationPath('src/scripts/' + this.props.module_name + '.js'),
+      this.templatePath('module-template/src/scripts/template.js'),
+      this.destinationPath('module-template/src/scripts/' + this.props.module_name + '.js'),
       this.props
     );
   },
