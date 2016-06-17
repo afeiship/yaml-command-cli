@@ -30,9 +30,9 @@ module.exports = yeoman.Base.extend({
     }.bind(this));
   },
   writing: function () {
+    this._TMPLATE_DIR = this.props.module_name;
     this._writingGulpfile();
     this._writingIndexHtml();
-    this._writingPackageJson();
     this._writingReadme();
     this._writingImages();
     this._writingSass();
@@ -41,51 +41,46 @@ module.exports = yeoman.Base.extend({
   _writingGulpfile: function () {
     this.fs.copyTpl(
       this.templatePath('module-template/gulpfile.js'),
-      this.destinationPath('module-template/gulpfile.js'),
+      this.destinationPath(this._TMPLATE_DIR + '/gulpfile.js'),
       this.props
     );
   },
   _writingIndexHtml: function () {
     this.fs.copyTpl(
       this.templatePath('module-template/index.html'),
-      this.destinationPath('module-template/index.html'),
-      this.props
-    );
-  },
-  _writingPackageJson: function () {
-    this.fs.copyTpl(
-      this.templatePath('module-template/package.json'),
-      this.destinationPath('module-template/package.json'),
+      this.destinationPath(this._TMPLATE_DIR + '/index.html'),
       this.props
     );
   },
   _writingReadme: function () {
     this.fs.copyTpl(
       this.templatePath('module-template/README.MD'),
-      this.destinationPath('module-template/README.MD'),
+      this.destinationPath(this._TMPLATE_DIR + '/README.MD'),
       this.props
     );
   },
   _writingImages: function () {
     this.fs.copy(
       this.templatePath('module-template/src/images/*'),
-      this.destinationPath('module-template/src/images/')
+      this.destinationPath(this._TMPLATE_DIR + '/src/images/')
     );
   },
   _writingSass: function () {
     this.fs.copy(
       this.templatePath('module-template/src/sass/template.scss'),
-      this.destinationPath('module-template/src/sass/' + this.props.module_name + '.scss')
+      this.destinationPath(this._TMPLATE_DIR + '/src/sass/' + this._TMPLATE_DIR + '.scss')
     );
   },
   _writingScrips: function () {
     this.fs.copyTpl(
       this.templatePath('module-template/src/scripts/template.js'),
-      this.destinationPath('module-template/src/scripts/' + this.props.module_name + '.js'),
+      this.destinationPath(this._TMPLATE_DIR + '/src/scripts/' + this._TMPLATE_DIR + '.js'),
       this.props
     );
   },
   install: function () {
-    this.installDependencies();
+    this.log('cd ' + this._TMPLATE_DIR);
+    this.log('npm install');
+    //this.installDependencies();
   }
 });
