@@ -12,7 +12,7 @@
 
   var sassOptions = {
     errLogToConsole: true,
-    outputStyle: 'expanded'
+    outputStyle: 'compressed'
   };
 
   /* ================module build scripts Start====================== */
@@ -50,9 +50,9 @@
   gulp.task('styles', function () {
     return gulp
       .src('src/sass/*.scss')
-      .pipe($.sourcemaps.init())
+      //.pipe($.sourcemaps.init())
       .pipe($.sass(sassOptions).on('error', $.sass.logError))
-      .pipe($.sourcemaps.write())
+      //.pipe($.sourcemaps.write())
       .pipe($.autoprefixer())
       .pipe(gulp.dest('dist/styles'));
   });
