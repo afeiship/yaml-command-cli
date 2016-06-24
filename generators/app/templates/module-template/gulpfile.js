@@ -83,7 +83,12 @@
   });
 
 
-  gulp.task('publish', function () {
+  gulp.task('publish', [
+    'clean',
+    'images',
+    'scripts',
+    'styles'
+  ], function () {
     exec('cd .. && gulp zip-module --module=<%= module_name %>', function () {
       console.info('[Success! Package path]:->', 'dist-module-packages/<%= module_name %>.zip');
     });
