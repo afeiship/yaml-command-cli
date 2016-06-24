@@ -84,8 +84,8 @@
 
 
   gulp.task('publish', function () {
-    exec('cd .. && gulp tgz --module=<%= module_name %>', function () {
-      console.info('[Success! Package path]:->', 'dist-module-packages/<%= module_name %>.tar.gz');
+    exec('cd .. && gulp zip-module --module=<%= module_name %>', function () {
+      console.info('[Success! Package path]:->', 'dist-module-packages/<%= module_name %>.zip');
     });
   });
 
