@@ -1,7 +1,6 @@
 import { Command, flags } from '@oclif/command';
 import { execSync } from 'child_process';
 import path from 'path';
-import nx from '@jswork/next';
 import NxYamlConfiguration from '@jswork/next-yaml-configuration';
 
 class YamlCommandCli extends Command {
