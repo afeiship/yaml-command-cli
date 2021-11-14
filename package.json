@@ -1,51 +1,55 @@
 {
-  "name": "generator-native-offline-h5",
-  "version": "0.0.0",
-  "description": "Yeoman generator for `afeiship/native-offline-h5`.",
-  "homepage": "https://github.com/afeiship/generator-native-offline-h5",
-  "author": {
-    "name": "afei",
-    "email": "1290657123@qq.com",
-    "url": "https://github.com/afeiship"
+  "name": "yaml-command-cli",
+  "description": "Yaml cmd cli.",
+  "version": "1.0.0",
+  "author": "afeiship @afeiship",
+  "bin": {
+    "ycc": "./bin/run"
   },
-  "files": [
-    "generators"
-  ],
-  "main": "generators/index.js",
-  "keywords": [
-    "",
-    "yeoman-generator"
-  ],
+  "bugs": "https://github.com/afeiship/yaml-command-cli/issues",
   "dependencies": {
-    "yeoman-generator": "^0.23.0",
-    "chalk": "^1.0.0",
-    "yosay": "^1.0.0"
+    "@oclif/command": "^1.8.0",
+    "@oclif/config": "^1.17.0",
+    "@oclif/plugin-help": "^3.2.4",
+    "tslib": "^1.14.1"
   },
   "devDependencies": {
-    "yeoman-test": "^1.0.0",
-    "yeoman-assert": "^2.0.0",
-    "eslint": "^2.1.0",
-    "eslint-config-xo-space": "^0.13.0",
-    "gulp": "^3.9.0",
-    "gulp-eslint": "^2.0.0",
-    "gulp-exclude-gitignore": "^1.0.0",
-    "gulp-line-ending-corrector": "^1.0.1",
-    "gulp-istanbul": "^0.10.3",
-    "gulp-mocha": "^2.0.0",
-    "gulp-plumber": "^1.0.0",
-    "gulp-nsp": "^2.1.0",
-    "gulp-coveralls": "^0.1.0"
+    "@oclif/dev-cli": "^1.26.0",
+    "@oclif/test": "^1.2.8",
+    "@types/chai": "^4.2.22",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^10.17.60",
+    "chai": "^4.3.4",
+    "eslint": "^5.16.0",
+    "eslint-config-oclif": "^3.1.0",
+    "eslint-config-oclif-typescript": "^0.1.0",
+    "mocha": "^5.2.0",
+    "nyc": "^14.1.1",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.10"
   },
-  "eslintConfig": {
-    "extends": "xo-space",
-    "env": {
-      "mocha": true
-    }
+  "engines": {
+    "node": ">=8.0.0"
   },
-  "repository": "git@github.com:afeiship/generator-native-offline-h5.git",
+  "files": [
+    "/bin",
+    "/lib"
+  ],
+  "homepage": "https://github.com/afeiship/yaml-command-cli",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "oclif": {
+    "bin": "ycc"
+  },
+  "repository": "afeiship/yaml-command-cli",
   "scripts": {
-    "prepublish": "gulp prepublish",
-    "test": "gulp"
+    "posttest": "eslint . --ext .ts --config .eslintrc",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev readme",
+    "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
+    "version": "oclif-dev readme && git add README.md"
   },
-  "license": "MIT"
+  "types": "lib/index.d.ts"
 }
