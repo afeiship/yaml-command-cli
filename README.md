@@ -4,6 +4,7 @@
 
 ## usage
 ```yml
+# .ycc.yml
 vars:
   remote: /home/aric.zheng/aric-jswork/jsw-rails/db
   local: /Users/aric.zheng/aric-jswork/jsw-rails/db
