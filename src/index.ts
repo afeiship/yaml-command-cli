@@ -1,29 +1,25 @@
-import {Command, flags} from '@oclif/command'
+import { Command, flags } from "@oclif/command";
+import nx from "@jswork/next";
+import NxYamlConfiguration from "@jswork/next-yaml-configuration";
 
 class YamlCommandCli extends Command {
-  static description = 'describe the command here'
+  static description = "describe the command here";
 
   static flags = {
     // add --version flag to show CLI version
-    version: flags.version({char: 'v'}),
-    help: flags.help({char: 'h'}),
-    // flag with a value (-n, --name=VALUE)
-    name: flags.string({char: 'n', description: 'name to print'}),
-    // flag with no value (-f, --force)
-    force: flags.boolean({char: 'f'}),
-  }
+    version: flags.version({ char: "v" }),
+    help: flags.help({ char: "h" }),
+  };
 
-  static args = [{name: 'file'}]
+  static args = [{ name: "config" }];
+
+  private conf;
 
   async run() {
-    const {args, flags} = this.parse(YamlCommandCli)
-
-    const name = flags.name ?? 'world'
-    this.log(`hello ${name} from ./src/index.ts`)
-    if (args.file && flags.force) {
-      this.log(`you input --force and --file: ${args.file}`)
-    }
+    const { args, flags } = this.parse(YamlCommandCli);
+    this.conf = new NxYamlConfiguration({ path: args.config });
+    console.log(this.conf.gets());
   }
 }
 
-export = YamlCommandCli
+export = YamlCommandCli;
