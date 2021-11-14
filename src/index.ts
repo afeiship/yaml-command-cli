@@ -18,7 +18,9 @@ class YamlCommandCli extends Command {
   async run() {
     const { args, flags } = this.parse(YamlCommandCli);
     this.conf = new NxYamlConfiguration({ path: args.config });
-    console.log(this.conf.gets());
+    const cfg = this.conf.gets();
+    console.log(cfg);
+
   }
 }
 
