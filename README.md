@@ -26,3 +26,8 @@ ycc -c prd2dev
 # composite
 ycc -c sync,prd2dev
 ```
+
+
+## configuration
+- ~/.ycc.yml
+- current_project_dir/.ycc.yml
