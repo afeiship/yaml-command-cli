@@ -22,4 +22,7 @@ ycc -c sync
 
 # command: prd2dev
 ycc -c prd2dev
+
+# composite
+ycc -c sync,prd2dev
 ```
