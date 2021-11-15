@@ -1,6 +1,12 @@
 # yaml-command-cli
 > Yaml cmd cli.
 
+## installation
+```shell
+git clone https://github.com/afeiship/yaml-command-cli.git
+cd yaml-command-cli
+npm link
+```
 
 ## usage
 ```yml
