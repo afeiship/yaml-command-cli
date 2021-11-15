@@ -29,5 +29,10 @@ ycc -c sync,prd2dev
 
 
 ## configuration
-- ~/.ycc.yml
-- current_project_dir/.ycc.yml
+```conf
+; in home dir
+~/.ycc.yml
+
+; in project dir
+current_project_dir/.ycc.yml
+```
