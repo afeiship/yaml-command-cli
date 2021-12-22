@@ -1,19 +1,25 @@
-import {expect, test} from '@oclif/test'
+import { expect, test } from '@oclif/test';
 
-import cmd = require('../src')
+import cmd = require('../src');
 
 describe('yaml-command-cli', () => {
   test
-  .stdout()
-  .do(() => cmd.run([]))
-  .it('runs hello', ctx => {
-    expect(ctx.stdout).to.contain('hello world')
-  })
+    .stdout()
+    .do(() => cmd.run([]))
+    .catch(/Command is required/);
 
   test
-  .stdout()
-  .do(() => cmd.run(['--name', 'jeff']))
-  .it('runs hello --name jeff', ctx => {
-    expect(ctx.stdout).to.contain('hello jeff')
-  })
-})
+    .stdout()
+    .do(() => cmd.run(['--list']))
+    .it('runs ycc --list', (ctx) => {
+      console.log('ctx.stdout', ctx.stdout);
+      expect(ctx.stdout).to.contain('\ncmd1\ncmd2\ndynamic1');
+    });
+
+  test
+    .stdout()
+    .do(() => cmd.run(['-c cmd2 --dryRun']))
+    .it('runs: ycc -c cmd2 -d', (ctx) => {
+      expect(ctx.stdout).to.contain('KUBECONFIG=~/.kube/kube_config cd {0}');
+    });
+});

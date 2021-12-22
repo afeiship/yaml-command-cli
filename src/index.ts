@@ -72,11 +72,11 @@ class YamlCommandCli extends Command {
 
   async run() {
     const { argv, flags } = this.parse(YamlCommandCli);
-
     const cfgPath = path.join(process.cwd(), '.ycc.yml');
     const ymlPath = this.getYmlPath(cfgPath);
     this.conf = new NxYamlConfiguration({ path: ymlPath });
     if (flags.list) return this.cmd2list();
+    if (!flags.cmd) throw new Error('Command is required.');
     const cmd = this.getCmds(flags.cmd!, argv);
     if (flags.dryRun) return console.log('\ncommand:\n', cmd);
     console.log(execSync(cmd, { shell: '/bin/bash', encoding: 'utf8' }).trim());
