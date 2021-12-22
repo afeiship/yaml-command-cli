@@ -2,8 +2,14 @@ import { Command, flags } from '@oclif/command';
 import { execSync } from 'child_process';
 import path from 'path';
 import fs from 'fs';
+import nx from '@jswork/next';
 import NxYamlConfiguration from '@jswork/next-yaml-configuration';
 import nxTmpl from '@jswork/next-tmpl';
+
+interface Option {
+  label: string;
+  value: string;
+}
 
 const EXEC_MODE = ' && ';
 
@@ -17,6 +23,10 @@ class YamlCommandCli extends Command {
     cmd: flags.string({
       char: 'c',
       description: 'Execute the cmd from list.'
+    }),
+    list: flags.boolean({
+      char: 'l',
+      description: 'List all commands.'
     }),
     dryRun: flags.boolean({
       char: 'd',
@@ -45,6 +55,14 @@ class YamlCommandCli extends Command {
       .join(EXEC_MODE);
   }
 
+  private cmd2list() {
+    const cmds = this.commands;
+    const list: string[] = [];
+    nx.forIn(cmds, (key) => list.push(key));
+    console.log('Current commands list:');
+    console.log(list.join('\n'));
+  }
+
   get commands() {
     const cfg = this.conf.gets();
     return cfg.commands;
@@ -52,10 +70,12 @@ class YamlCommandCli extends Command {
 
   async run() {
     const { argv, flags } = this.parse(YamlCommandCli);
-    if (!flags.cmd) return;
+
     const cfgPath = path.join(process.cwd(), '.ycc.yml');
     const ymlPath = this.getYmlPath(cfgPath);
     this.conf = new NxYamlConfiguration({ path: ymlPath });
+    if (flags.list) return this.cmd2list();
+    if (!flags.cmd) return;
     const cmd = this.getCmds(flags.cmd!, argv);
     if (flags.dryRun) return console.log('command:', cmd);
     console.log(execSync(cmd, { shell: '/bin/bash', encoding: 'utf8' }).trim());
