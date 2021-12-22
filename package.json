@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "afeiship @afeiship",
   "bin": {
-    "ycc": "./bin/lib/index"
+    "ycc": "./lib/index.js"
   },
   "bugs": "https://github.com/afeiship/yaml-command-cli/issues",
   "dependencies": {
