@@ -47,12 +47,14 @@ class YamlCommandCli extends Command {
 
   private getCmds(inCmd, inArgv) {
     const cmds = inCmd.split(',');
-    return cmds
+    const envs = this.envs;
+    const cmd = cmds
       .map((cmd) => {
         const pureCmd = this.commands[cmd].join(EXEC_MODE);
         return nxTmpl(pureCmd, inArgv);
       })
       .join(EXEC_MODE);
+    return !envs ? cmd : `${envs.join(' ')} ${cmd}`;
   }
 
   private cmd2list() {
@@ -61,6 +63,11 @@ class YamlCommandCli extends Command {
     nx.forIn(cmds, (key) => list.push(key));
     console.log('Current commands list:');
     console.log(list.join('\n'));
+  }
+
+  get envs() {
+    const cfg = this.conf.gets();
+    return cfg.envs;
   }
 
   get commands() {
@@ -75,9 +82,8 @@ class YamlCommandCli extends Command {
     const ymlPath = this.getYmlPath(cfgPath);
     this.conf = new NxYamlConfiguration({ path: ymlPath });
     if (flags.list) return this.cmd2list();
-    if (!flags.cmd) return;
     const cmd = this.getCmds(flags.cmd!, argv);
-    if (flags.dryRun) return console.log('command:', cmd);
+    if (flags.dryRun) return console.log('\ncommand:\n', cmd);
     console.log(execSync(cmd, { shell: '/bin/bash', encoding: 'utf8' }).trim());
   }
 }
