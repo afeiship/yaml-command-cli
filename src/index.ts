@@ -6,11 +6,6 @@ import nx from '@jswork/next';
 import NxYamlConfiguration from '@jswork/next-yaml-configuration';
 import nxTmpl from '@jswork/next-tmpl';
 
-interface Option {
-  label: string;
-  value: string;
-}
-
 const EXEC_MODE = ' && ';
 
 class YamlCommandCli extends Command {
