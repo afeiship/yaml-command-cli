@@ -35,7 +35,7 @@ class YamlCommandCli extends Command {
     return [defPath];
   }
 
-  private getCmds(inCmd, inArgv) {
+  private getCmdStr(inCmd, inArgv) {
     const cmds = inCmd.split(',');
     const envs = this.conf.get('envs');
     const cmd = cmds
@@ -55,7 +55,7 @@ class YamlCommandCli extends Command {
     const cmdKeys = Object.keys(this.commands);
 
     ipt(cmdKeys, opts).then((res) => {
-      const cmdStr = this.getCmds(res[0], argv);
+      const cmdStr = this.getCmdStr(res[0], argv);
       const cmdRes = execSync(cmdStr, { shell: '/bin/bash', encoding: 'utf8' });
       if (!flags.quite) console.log('cmd/response: ', cmdStr, cmdRes.trim());
     });
