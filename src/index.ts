@@ -10,6 +10,17 @@ import '@jswork/next-tmpl';
 const EXEC_MODE = ' && ';
 const ENTRY_FILE = '.ycc.yml';
 const opts = { stdin: process.stdin, stdout: process.stdout };
+const splYml =
+  'name: project_name\n' +
+  'vars:\n' +
+  '  home: ${{ env.HOME }}\n' +
+  '  var1: value1\n' +
+  'commands:\n' +
+  '  cmd1:\n' +
+  '    - echo "hello"\n' +
+  '  cmd2:\n' +
+  '    - echo "world"\n';
+
 
 class YamlCommandCli extends Command {
   static strict = false;
@@ -49,10 +60,7 @@ class YamlCommandCli extends Command {
   }
 
   async initYcc() {
-    fs.writeFileSync(
-      path.join(process.cwd(), ENTRY_FILE),
-      'commands: \n test:\n - echo "hello world"'
-    );
+    fs.writeFileSync(path.join(process.cwd(), ENTRY_FILE), splYml);
     console.log('init ycc config file success, at ', path.join(process.cwd(), ENTRY_FILE));
   }
 
