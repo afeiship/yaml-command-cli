@@ -3,6 +3,7 @@ import { execSync } from 'child_process';
 import path from 'path';
 import fs from 'fs';
 import ipt from 'ipt';
+import chalk from 'chalk';
 import nx from '@jswork/next';
 import NxYamlConfiguration from '@jswork/next-yaml-configuration';
 import '@jswork/next-tmpl';
@@ -21,7 +22,6 @@ const splYml =
   '  cmd2:\n' +
   '    - echo "world"\n';
 
-
 class YamlCommandCli extends Command {
   static strict = false;
   static description = 'describe the command here';
@@ -34,6 +34,10 @@ class YamlCommandCli extends Command {
 
   get commands() {
     return this.conf.get('commands');
+  }
+
+  get entryfile() {
+    return path.join(process.cwd(), ENTRY_FILE);
   }
 
   private conf;
@@ -60,24 +64,24 @@ class YamlCommandCli extends Command {
   }
 
   async initYcc() {
-    fs.writeFileSync(path.join(process.cwd(), ENTRY_FILE), splYml);
-    console.log('init ycc config file success, at ', path.join(process.cwd(), ENTRY_FILE));
+    fs.writeFileSync(this.entryfile, splYml);
+    console.log('init ycc config file success, at ', this.entryfile);
   }
 
   async run() {
     const { argv, flags } = this.parse(YamlCommandCli);
-
     if (flags.init) return await this.initYcc();
 
-    const cfgPath = path.join(process.cwd(), ENTRY_FILE);
-    const ymlPath = this.getYmlPath(cfgPath);
+    const ymlPath = this.getYmlPath(this.entryfile);
     this.conf = new NxYamlConfiguration({ path: ymlPath });
-    const cmdKeys = Object.keys(this.commands);
 
-    ipt(cmdKeys, opts).then((res) => {
+    ipt(Object.keys(this.commands), opts).then((res) => {
       const cmdStr = this.getCmdStr(res[0], argv);
       const cmdRes = execSync(cmdStr, { shell: '/bin/bash', encoding: 'utf8' });
-      if (!flags.quite) console.log('cmd/response: ', cmdStr, cmdRes.trim());
+      if (!flags.quite) {
+        console.log(chalk.white.bold('commands: ') + chalk.green.bold(cmdStr));
+        console.log(cmdRes.trim());
+      }
     });
   }
 }
