@@ -17,7 +17,8 @@ class YamlCommandCli extends Command {
 
   static flags = {
     help: flags.help({ char: 'h' }),
-    quite: flags.boolean({ char: 'q', description: 'quite mode', default: false })
+    quite: flags.boolean({ char: 'q', description: 'quite mode', default: false }),
+    init: flags.boolean({ char: 'i', description: 'init config file' })
   };
 
   get commands() {
@@ -47,9 +48,20 @@ class YamlCommandCli extends Command {
     return !envs ? cmd : `${envs.join(' ')} ${cmd}`;
   }
 
+  async initYcc() {
+    fs.writeFileSync(
+      path.join(process.cwd(), ENTRY_FILE),
+      'commands: \n test:\n - echo "hello world"'
+    );
+    console.log('init ycc config file success, at ', path.join(process.cwd(), ENTRY_FILE));
+  }
+
   async run() {
     const { argv, flags } = this.parse(YamlCommandCli);
-    const cfgPath = path.join(process.cwd(), '.ycc.yml');
+
+    if (flags.init) return await this.initYcc();
+
+    const cfgPath = path.join(process.cwd(), ENTRY_FILE);
     const ymlPath = this.getYmlPath(cfgPath);
     this.conf = new NxYamlConfiguration({ path: ymlPath });
     const cmdKeys = Object.keys(this.commands);
