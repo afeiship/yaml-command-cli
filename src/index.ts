@@ -2,7 +2,7 @@ import { Command, flags } from '@oclif/command';
 import { execSync } from 'child_process';
 import path from 'path';
 import fs from 'fs';
-import ipt from 'ipt';
+import ipt from '@jswork/ipt';
 import chalk from 'chalk';
 import nx from '@jswork/next';
 import NxYamlConfiguration from '@jswork/next-yaml-configuration';
@@ -10,7 +10,6 @@ import '@jswork/next-tmpl';
 
 const EXEC_MODE = ' && ';
 const ENTRY_FILE = '.ycc.yml';
-const opts = { stdin: process.stdin, stdout: process.stdout };
 const splYml =
   'name: project_name\n' +
   'vars:\n' +
@@ -75,8 +74,8 @@ class YamlCommandCli extends Command {
     const ymlPath = this.getYmlPath(this.entryfile);
     this.conf = new NxYamlConfiguration({ path: ymlPath });
 
-    ipt(Object.keys(this.commands), opts).then((res) => {
-      const cmdStr = this.getCmdStr(res[0], argv);
+    ipt(Object.keys(this.commands)).then((res) => {
+      const cmdStr = this.getCmdStr(res, argv);
       const cmdRes = execSync(cmdStr, { shell: '/bin/bash', encoding: 'utf8' });
       if (!flags.quite) {
         console.log(chalk.white.bold('commands: ') + chalk.green.bold(cmdStr));
