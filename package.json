@@ -1,7 +1,7 @@
 {
   "name": "yaml-command-cli",
   "description": "Yaml cmd cli.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "afeiship @afeiship",
   "bin": {
     "ycc": "./bin/run"
@@ -45,7 +45,15 @@
   ],
   "homepage": "https://js.work",
   "keywords": [
-    "oclif"
+    "yaml",
+    "yml",
+    "cmd",
+    "cli",
+    "script",
+    "command",
+    "nodejs",
+    "ycc",
+    "ipt"
   ],
   "license": "MIT",
   "main": "lib/index.js",
@@ -62,5 +70,9 @@
     "version": "oclif-dev readme && git add README.md",
     "release": "release-it"
   },
-  "types": "lib/index.d.ts"
+  "types": "lib/index.d.ts",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }
