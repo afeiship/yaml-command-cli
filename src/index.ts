@@ -26,7 +26,7 @@ const splYml =
 
 class YamlCommandCli extends Command {
   static strict = false;
-  static description = 'describe the command here';
+  static description = 'Yaml command list cli.';
 
   static flags = {
     help: flags.help({ char: 'h' }),
