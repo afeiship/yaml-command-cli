@@ -6,12 +6,15 @@ import ipt from '@jswork/ipt';
 import chalk from 'chalk';
 import nx from '@jswork/next';
 import NxYamlConfiguration from '@jswork/next-yaml-configuration';
+import NxLruFsStorage from '@jswork/next-lru-fs-storage';
 import '@jswork/next-tmpl';
+import '@jswork/next-random-string';
 
 const EXEC_MODE = ' && ';
 const ENTRY_FILE = '.ycc.yml';
 const splYml =
   'name: project_name\n' +
+  `cache: ${nx.randomString(8)}\n` +
   'vars:\n' +
   '  home: ${{ env.HOME }}\n' +
   '  var1: value1\n' +
@@ -39,7 +42,22 @@ class YamlCommandCli extends Command {
     return path.join(process.cwd(), ENTRY_FILE);
   }
 
-  private conf;
+  get cache() {
+    const cacheKey = this.conf.get('cache');
+    if (cacheKey) {
+      const store = new NxLruFsStorage(cacheKey);
+      return {
+        store,
+        set: (value) => store.set('ipt', value),
+        get: () => store.get('ipt')
+      };
+    }
+    return { store: null, set: () => {}, get: () => null };
+  }
+
+  get conf() {
+    return new NxYamlConfiguration({ path: this.getYmlPath(this.entryfile) });
+  }
 
   private getYmlPath(inCfgPath) {
     const cfg = inCfgPath || path.join(process.cwd(), ENTRY_FILE);
@@ -71,10 +89,10 @@ class YamlCommandCli extends Command {
     const { argv, flags } = this.parse(YamlCommandCli);
     if (flags.init) return await this.initYcc();
 
-    const ymlPath = this.getYmlPath(this.entryfile);
-    this.conf = new NxYamlConfiguration({ path: ymlPath });
+    const cache = this.cache;
 
-    ipt(Object.keys(this.commands)).then((res) => {
+    ipt(Object.keys(this.commands), { default: cache.get() }).then((res) => {
+      cache.set(res);
       const cmdStr = this.getCmdStr(res, argv);
       const cmdRes = execSync(cmdStr, { shell: '/bin/bash', encoding: 'utf8' });
       if (!flags.quite) {

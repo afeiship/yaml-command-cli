@@ -10,6 +10,8 @@
   "dependencies": {
     "@jswork/ipt": "^1.0.0",
     "@jswork/next": "^1.0.9",
+    "@jswork/next-lru-fs-storage": "^1.0.1",
+    "@jswork/next-random-string": "^1.0.0",
     "@jswork/next-tmpl": "^1.0.1",
     "@jswork/next-yaml-configuration": "^1.0.3",
     "@oclif/command": "^1.8.0",
