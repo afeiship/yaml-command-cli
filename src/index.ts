@@ -65,7 +65,7 @@ class YamlCommandCli extends Command {
     if (fs.existsSync(defPath)) {
       return [defPath].concat(cfg);
     }
-    return [defPath];
+    return [inCfgPath];
   }
 
   private getCmdStr(inCmd, inArgv) {
