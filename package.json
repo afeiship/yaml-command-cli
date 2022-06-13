@@ -1,7 +1,7 @@
 {
   "name": "yaml-command-cli",
   "description": "Yaml cmd cli.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "afeiship @afeiship",
   "bin": {
     "ycc": "./bin/run"

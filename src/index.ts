@@ -80,26 +80,28 @@ class YamlCommandCli extends Command {
     return !envs ? cmd : `${envs.join(' ')} ${cmd}`;
   }
 
-  async initYcc() {
+  async initConfig() {
     fs.writeFileSync(this.entryfile, splYml);
     console.log('init ycc config file success, at ', this.entryfile);
   }
 
-  async run() {
-    const { argv, flags } = this.parse(YamlCommandCli);
-    if (flags.init) return await this.initYcc();
-
+  async main(inParsed) {
+    const { argv, flags } = inParsed;
     const cache = this.cache;
 
-    ipt(Object.keys(this.commands), { default: cache.get() }).then((res) => {
-      cache.set(res);
-      const cmdStr = this.getCmdStr(res, argv);
-      const cmdRes = execSync(cmdStr, { shell: '/bin/bash', encoding: 'utf8' });
-      if (!flags.quite) {
-        console.log(chalk.white.bold('commands: ') + chalk.green.bold(cmdStr));
-        console.log(cmdRes.trim());
-      }
-    });
+    const res = await ipt(Object.keys(this.commands), { default: cache.get() });
+    const cmdStr = this.getCmdStr(res, argv);
+    const cmdRes = execSync(cmdStr, { shell: '/bin/bash', encoding: 'utf8' });
+    cache.set(res);
+    if (flags.quite) return;
+    console.log(chalk.white.bold('commands: ') + chalk.green.bold(cmdStr));
+    console.log(cmdRes.trim());
+  }
+
+  async run() {
+    const { argv, flags } = this.parse(YamlCommandCli);
+    if (flags.init) return await this.initConfig();
+    this.main({ argv, flags });
   }
 }
 
