@@ -11,6 +11,8 @@ npm link
 ## usage
 ```yml
 # .ycc.yml
+name: project_name
+cache: 2QBKI2nT
 vars:
   remote: /home/aric.zheng/aric-jswork/jsw-rails/db
   local: ${{ env.HOME }}/aric-jswork/jsw-rails/db
