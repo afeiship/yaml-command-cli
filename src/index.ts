@@ -56,6 +56,10 @@ class YamlCommandCli extends Command {
   }
 
   get conf() {
+    if (!fs.existsSync(this.entryfile)) {
+      console.log(chalk.red.bold('🤡: ycc config file not found, please run `ycc --init`'));
+      process.exit(1);
+    }
     return new NxYamlConfiguration({ path: this.getYmlPath(this.entryfile) });
   }
 
