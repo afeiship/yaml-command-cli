@@ -12,6 +12,7 @@ import '@jswork/next-random-string';
 
 const EXEC_MODE = ' && ';
 const ENTRY_FILE = '.ycc.yml';
+const STUB_CACHE = { store: null, set: () => {}, get: () => null };
 const splYml =
   'name: project_name\n' +
   `cache: ${nx.randomString(8)}\n` +
@@ -44,15 +45,13 @@ class YamlCommandCli extends Command {
 
   get cache() {
     const cacheKey = this.conf.get('cache');
-    if (cacheKey) {
-      const store = new NxLruFsStorage(cacheKey);
-      return {
-        store,
-        set: (value) => store.set('ipt', value),
-        get: () => store.get('ipt')
-      };
-    }
-    return { store: null, set: () => {}, get: () => null };
+    if (!cacheKey) return STUB_CACHE;
+    const store = new NxLruFsStorage(cacheKey);
+    return {
+      store,
+      set: (value) => store.set('ipt', value),
+      get: () => store.get('ipt')
+    };
   }
 
   get conf() {
