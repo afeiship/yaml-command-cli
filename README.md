@@ -3,6 +3,10 @@
 
 ## installation
 ```shell
+# public
+npm i -g @jswork/yaml-command-cli
+
+# private
 git clone https://github.com/afeiship/yaml-command-cli.git
 cd yaml-command-cli
 npm link
