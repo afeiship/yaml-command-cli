@@ -13,7 +13,7 @@ import '@jswork/next-random-string';
 const EXEC_MODE = ' && ';
 const ENTRY_FILE = '.ycc.yml';
 const STUB_CACHE = { store: null, set: () => {}, get: () => null };
-const splYml =
+const initYaml =
   'name: project_name\n' +
   `cache: ${nx.randomString(8)}\n` +
   'vars:\n' +
@@ -84,7 +84,7 @@ class YamlCommandCli extends Command {
   }
 
   async initConfig() {
-    fs.writeFileSync(this.entryfile, splYml);
+    fs.writeFileSync(this.entryfile, initYaml);
     console.log('init ycc config file success, at ', this.entryfile);
   }
 
