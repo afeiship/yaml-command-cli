@@ -35,8 +35,8 @@ commands:
 ## configuration
 ```conf
 ; in home dir
-~/.ycc.yml
+~/.ytl.yml
 
 ; in project dir
-current_project_dir/.ycc.yml
+current_project_dir/.ytl.yml
 ```
