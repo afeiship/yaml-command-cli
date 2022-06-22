@@ -20,7 +20,7 @@ cache: 2QBKI2nT
 vars:
   remote: /home/aric.zheng/aric-jswork/jsw-rails/db
   local: ${{ env.HOME }}/aric-jswork/jsw-rails/db
-commands:
+tasks:
   sync:
     - scp west:${{ vars.remote }}/production.sqlite3 ${{ vars.local }}/production.sqlite3
   prd2dev:
