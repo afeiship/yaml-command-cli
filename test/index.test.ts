@@ -2,7 +2,7 @@ import { expect, test } from '@oclif/test';
 
 import cmd = require('../src');
 
-describe('yaml-command-cli', () => {
+describe('ytl', () => {
   test
     .stdout()
     .do(() => cmd.run([]))

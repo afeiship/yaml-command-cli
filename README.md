@@ -1,20 +1,20 @@
-# yaml-command-cli
-> Yaml cmd cli.
+# ytl
+> Yaml task list.
 
 ## installation
 ```shell
 # public
-npm i -g @jswork/yaml-command-cli
+npm i -g @jswork/ytl
 
 # private
-git clone https://github.com/afeiship/yaml-command-cli.git
-cd yaml-command-cli
+git clone https://github.com/afeiship/ytl.git
+cd ytl
 npm link
 ```
 
 ## usage
 ```yml
-# .ycc.yml
+# .ytl.yml
 name: project_name
 cache: 2QBKI2nT
 vars:

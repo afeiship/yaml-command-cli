@@ -11,7 +11,7 @@ import '@jswork/next-tmpl';
 import '@jswork/next-random-string';
 
 const EXEC_MODE = ' && ';
-const ENTRY_FILE = '.ycc.yml';
+const ENTRY_FILE = '.ytl.yml';
 const STUB_CACHE = { store: null, set: () => {}, get: () => null };
 const initYaml =
   'name: project_name\n' +
@@ -25,7 +25,7 @@ const initYaml =
   '  cmd2:\n' +
   '    - echo "world"\n';
 
-class YamlCommandCli extends Command {
+class Ytl extends Command {
   static strict = false;
   static description = 'Yaml command list cli.';
 
@@ -102,10 +102,10 @@ class YamlCommandCli extends Command {
   }
 
   async run() {
-    const { argv, flags } = this.parse(YamlCommandCli);
+    const { argv, flags } = this.parse(Ytl);
     if (flags.init) return await this.initConfig();
     this.main({ argv, flags });
   }
 }
 
-export = YamlCommandCli;
+export = Ytl;
