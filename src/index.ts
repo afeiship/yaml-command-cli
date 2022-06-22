@@ -19,7 +19,7 @@ const initYaml =
   'vars:\n' +
   '  home: ${{ env.HOME }}\n' +
   '  var1: value1\n' +
-  'commands:\n' +
+  'tasks:\n' +
   '  cmd1:\n' +
   '    - echo "hello"\n' +
   '  cmd2:\n' +
@@ -27,7 +27,7 @@ const initYaml =
 
 class Ytl extends Command {
   static strict = false;
-  static description = 'Yaml command list cli.';
+  static description = 'Yaml task list.';
 
   static flags = {
     help: flags.help({ char: 'h' }),
@@ -36,7 +36,7 @@ class Ytl extends Command {
   };
 
   get commands() {
-    return this.conf.get('commands');
+    return this.conf.get('tasks');
   }
 
   get entryfile() {
@@ -56,7 +56,7 @@ class Ytl extends Command {
 
   get conf() {
     if (!fs.existsSync(this.entryfile)) {
-      console.log(chalk.red.bold('🤡: ycc config file not found, please run `ycc --init`'));
+      console.log(chalk.red.bold('🤡: ytl config file not found, please run `ytl --init`'));
       process.exit(1);
     }
     return new NxYamlConfiguration({ path: this.getYmlPath(this.entryfile) });
@@ -85,7 +85,7 @@ class Ytl extends Command {
 
   async initConfig() {
     fs.writeFileSync(this.entryfile, initYaml);
-    console.log('init ycc config file success, at ', this.entryfile);
+    console.log('init ytl config file success, at ', this.entryfile);
   }
 
   async main(inParsed) {
