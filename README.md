@@ -9,7 +9,8 @@ npm i -g @jswork/ytl
 # private
 git clone https://github.com/afeiship/ytl.git
 cd ytl
-npm link
+npm i && npm link
+npm run build
 ```
 
 ## usage
